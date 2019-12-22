@@ -1,4 +1,4 @@
-############################# HEADER ######################################
+############################# MAIN.PY ######################################
 #
 # main program
 # vpis podatkov iz SQLite baze v excel(.xlsx) datoteko
@@ -90,6 +90,7 @@ class Ui_Izberi():
         self.izberiVelikostLb.setText("Izberi velikost")
         self.izberiVelikostCb = QComboBox(self.centralWidget)
         self.izberiVelikostCb.setGeometry(QRect(240, 350, 260, 20))
+        
         # gumb dodaj
         self.dodajPostavkoBtn = QPushButton(
             self.centralWidget, objectName="dodajPostavkoBtn")

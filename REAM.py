@@ -1,6 +1,6 @@
-############################# HEADER ######################################
+############################# REAM.PY ######################################
 #
-# main program
+# FORK main.py PROGRAMA - preizkus pred implementacijo v main.py
 # vpis podatkov iz SQLite baze v excel(.xlsx) datoteko
 #
 # MainWindow - osnovno okolje okoli gradnikov/widgetov
@@ -31,67 +31,67 @@ class Ui_MainWindow():
         self.centralWidget = QWidget(MainWindow, objectName="centralwidget")
 
         # lokacija excel
-        MainWindow.lokacijaExcelLb = QLabel(
+        self.lokacijaExcelLb = QLabel(
             self.centralWidget, objectName="lokacijaExcelLb")
-        MainWindow.lokacijaExcelLb.setGeometry(QRect(40, 20, 90, 20))
-        MainWindow.lokacijaExcelLb.setText("Lokacija Excel")
-        MainWindow.lokacijaExcelLe = QLineEdit(
+        self.lokacijaExcelLb.setGeometry(QRect(40, 20, 90, 20))
+        self.lokacijaExcelLb.setText("Lokacija Excel")
+        self.lokacijaExcelLe = QLineEdit(
             self.centralWidget, objectName="lokacijaExcelLe")
-        MainWindow.lokacijaExcelLe.setGeometry(QRect(160, 20, 340, 22))
+        self.lokacijaExcelLe.setGeometry(QRect(160, 20, 340, 22))
         # zakljuci zapis
-        MainWindow.zakljuciZapisBtn = QPushButton(
+        self.zakljuciZapisBtn = QPushButton(
             self.centralWidget, objectName="zakljuciZapisBtn")
-        MainWindow.zakljuciZapisBtn.setGeometry(QRect(380, 50, 120, 28))
-        MainWindow.zakljuciZapisBtn.setText("Zaključi zapis")
+        self.zakljuciZapisBtn.setGeometry(QRect(380, 50, 120, 28))
+        self.zakljuciZapisBtn.setText("Zaključi zapis")
         # dodane postavke
-        MainWindow.dodanePostavkeLb = QLabel(
+        self.dodanePostavkeLb = QLabel(
             self.centralWidget, objectName="dodanePostavkeLb")
-        MainWindow.dodanePostavkeLb.setGeometry(QRect(40, 100, 100, 20))
-        MainWindow.dodanePostavkeLb.setText("Dodane postavke")
-        MainWindow.dodanePostavkeTb = QTableView(
+        self.dodanePostavkeLb.setGeometry(QRect(40, 100, 100, 20))
+        self.dodanePostavkeLb.setText("Dodane postavke")
+        self.dodanePostavkeTb = QTableView(
             self.centralWidget, objectName="dodanePostavkeTb")
-        MainWindow.dodanePostavkeTb.setGeometry(QRect(160, 100, 340, 90))
+        self.dodanePostavkeTb.setGeometry(QRect(160, 100, 340, 90))
         # skupaj
-        MainWindow.skupajLb = QLabel(self.centralWidget, objectName="skupajLb")
-        MainWindow.skupajLb.setGeometry(QRect(310, 200, 40, 20))
-        MainWindow.skupajLe = QLineEdit(
+        self.skupajLb = QLabel(self.centralWidget, objectName="skupajLb")
+        self.skupajLb.setGeometry(QRect(310, 200, 40, 20))
+        self.skupajLe = QLineEdit(
             self.centralWidget, objectName="skupajLe")
-        MainWindow.skupajLe.setGeometry(QRect(380, 200, 120, 22))
-        MainWindow.skupajLb.setText("Skupaj")
+        self.skupajLe.setGeometry(QRect(380, 200, 120, 22))
+        self.skupajLb.setText("Skupaj")
 
         # horizontala
-        MainWindow.delitev = QFrame(self.centralWidget, objectName="delitev")
-        MainWindow.delitev.setGeometry(QRect(7, 230, 513, 20))
-        MainWindow.delitev.setFrameShape(QFrame.HLine)
-        MainWindow.delitev.setFrameShadow(QFrame.Sunken)
+        self.delitev = QFrame(self.centralWidget, objectName="delitev")
+        self.delitev.setGeometry(QRect(7, 230, 513, 20))
+        self.delitev.setFrameShape(QFrame.HLine)
+        self.delitev.setFrameShadow(QFrame.Sunken)
         # dodaj postavke
-        MainWindow.dodajPostavkoLb = QLabel(
+        self.dodajPostavkoLb = QLabel(
             self.centralWidget, objectName="dodajPostavkoLb")
-        MainWindow.dodajPostavkoLb.setGeometry(QRect(40, 260, 160, 20))
-        MainWindow.dodajPostavkoLb.setText("Dodajanje postavke")
+        self.dodajPostavkoLb.setGeometry(QRect(40, 260, 160, 20))
+        self.dodajPostavkoLb.setText("Dodajanje postavke")
         # izberi segment, model, velikost
-        MainWindow.izberiSegmentLb = QLabel(self.centralWidget)
-        MainWindow.izberiSegmentLb.setGeometry(QRect(40, 290, 90, 20))
-        MainWindow.izberiSegmentLb.setText("Izberi model")
-        MainWindow.izberiSegmentCb = QComboBox(self.centralWidget)
-        MainWindow.izberiSegmentCb.setGeometry(QRect(240, 290, 260, 20))
+        self.izberiSegmentLb = QLabel(self.centralWidget)
+        self.izberiSegmentLb.setGeometry(QRect(40, 290, 90, 20))
+        self.izberiSegmentLb.setText("Izberi model")
+        self.izberiSegmentCb = QComboBox(self.centralWidget)
+        self.izberiSegmentCb.setGeometry(QRect(240, 290, 260, 20))
 
-        MainWindow.izberiModelLb = QLabel(self.centralWidget)
-        MainWindow.izberiModelLb.setGeometry(QRect(40, 320, 90, 20))
-        MainWindow.izberiModelLb.setText("Izberi model")
-        MainWindow.izberiModelCb = QComboBox(self.centralWidget)
-        MainWindow.izberiModelCb.setGeometry(QRect(240, 320, 260, 20))
+        self.izberiModelLb = QLabel(self.centralWidget)
+        self.izberiModelLb.setGeometry(QRect(40, 320, 90, 20))
+        self.izberiModelLb.setText("Izberi model")
+        self.izberiModelCb = QComboBox(self.centralWidget)
+        self.izberiModelCb.setGeometry(QRect(240, 320, 260, 20))
 
-        MainWindow.izberiVelikostLb = QLabel(self.centralWidget)
-        MainWindow.izberiVelikostLb.setGeometry(QRect(40, 350, 90, 20))
-        MainWindow.izberiVelikostLb.setText("Izberi velikost")
-        MainWindow.izberiVelikostCb = QComboBox(self.centralWidget)
-        MainWindow.izberiVelikostCb.setGeometry(QRect(240, 350, 260, 20))
+        self.izberiVelikostLb = QLabel(self.centralWidget)
+        self.izberiVelikostLb.setGeometry(QRect(40, 350, 90, 20))
+        self.izberiVelikostLb.setText("Izberi velikost")
+        self.izberiVelikostCb = QComboBox(self.centralWidget)
+        self.izberiVelikostCb.setGeometry(QRect(240, 350, 260, 20))
         # gumb dodaj
-        MainWindow.dodajPostavkoBtn = QPushButton(
+        self.dodajPostavkoBtn = QPushButton(
             self.centralWidget, objectName="dodajPostavkoBtn")
-        MainWindow.dodajPostavkoBtn.setGeometry(QRect(380, 380, 120, 28))
-        MainWindow.dodajPostavkoBtn.setText("Dodaj postavko")
+        self.dodajPostavkoBtn.setGeometry(QRect(380, 380, 120, 28))
+        self.dodajPostavkoBtn.setText("Dodaj postavko")
 
         MainWindow.setCentralWidget(self.centralWidget)
 
