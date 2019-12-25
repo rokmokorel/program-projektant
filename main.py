@@ -11,6 +11,8 @@ from ui_zacetek import *
 from ui_izberi import *
 from ui_koncaj import *
 
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
 # from PyQt5.QtWidgets import QApplication, QMainWindow
 import sys
 
@@ -31,6 +33,8 @@ class Ui_MainWindow(QMainWindow):
 
     def nadaljuj_tu(self):
         self.uiOkno.setupUi(self)
+        # odpri dialog, lokacija excel datoteke
+        self.uiOkno.lokacijaExcelBtn.clicked.connect(self.uiOkno.fileDialog)
         self.uiOkno.zakljuciZapisBtn.clicked.connect(self.zacni_tu)
 
 

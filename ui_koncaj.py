@@ -7,9 +7,8 @@
 # Layout - prostor, kjer prebivajo gradniki
 #############################################################################
 
-from PyQt5.QtWidgets import QWidget, QMainWindow, QApplication, QPushButton, QLineEdit, QLabel, QFrame, QTableView, QComboBox
-from PyQt5.QtGui import QIcon, QFont
-from PyQt5.QtCore import QRect, QSize
+from PyQt5.QtWidgets import QWidget, QPushButton
+from PyQt5.QtCore import QSize
 
 class Ui_Koncaj():
     def setupUi(self, MainWindow):

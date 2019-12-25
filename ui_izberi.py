@@ -7,22 +7,19 @@
 # Layout - prostor, kjer prebivajo gradniki
 #############################################################################
 
-from PyQt5.QtWidgets import QWidget, QMainWindow, QPushButton, QLineEdit, QLabel, QFrame, QTableView, QComboBox
-from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QFrame, QTableView, QComboBox, QFileDialog
 from PyQt5.QtCore import QRect, QSize
 
-class Ui_Izberi():
+class Ui_Izberi(QWidget):
     def setupUi(self, MainWindow):
         # postavi glavni gradnik
         self.centralWidget = QWidget(MainWindow)
         # lokacija excel
-        lokacijaExcelBtn = QPushButton("Lokacija excel", self.centralWidget)
-        lokacijaExcelBtn.setGeometry(QRect(40, 19, 100, 24))
-        lokacijaExcelLe = QLineEdit(self.centralWidget)
-        lokacijaExcelLe.setGeometry(QRect(160, 20, 340, 22))
-
-        naslov = str(QFileDialog)
-
+        self.lokacijaExcelBtn = QPushButton("Lokacija excel", self.centralWidget)
+        self.lokacijaExcelBtn.setGeometry(QRect(40, 19, 100, 24))
+        self.lokacijaExcelLe = QLineEdit(self.centralWidget)
+        self.lokacijaExcelLe.setGeometry(QRect(160, 20, 340, 22))
+        
         # zakljuci zapis
         self.zakljuciZapisBtn = QPushButton(self.centralWidget)
         self.zakljuciZapisBtn.setGeometry(QRect(380, 50, 120, 28))
@@ -52,9 +49,11 @@ class Ui_Izberi():
         # izberi segment, model, velikost
         izberiSegmentLb = QLabel(self.centralWidget)
         izberiSegmentLb.setGeometry(QRect(40, 290, 90, 20))
-        izberiSegmentLb.setText("Izberi model")
+        izberiSegmentLb.setText("Izberi segment")
         izberiSegmentCb = QComboBox(self.centralWidget)
         izberiSegmentCb.setGeometry(QRect(240, 290, 260, 20))
+        segmenti = ["residential", "comercial"]
+        izberiSegmentCb.addItems(segmenti)
 
         izberiModelLb = QLabel(self.centralWidget)
         izberiModelLb.setGeometry(QRect(40, 320, 90, 20))
@@ -72,3 +71,7 @@ class Ui_Izberi():
         dodajPostavkoBtn = QPushButton("Dodaj postavko", self.centralWidget)
         dodajPostavkoBtn.setGeometry(QRect(380, 380, 120, 28))
         MainWindow.setCentralWidget(self.centralWidget)
+
+    def fileDialog(self):
+        fname = QFileDialog.getExistingDirectory(self, "Izberi mapo")
+        self.lokacijaExcelLe.setText(fname)
