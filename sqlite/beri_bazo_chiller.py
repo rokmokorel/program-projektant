@@ -1,24 +1,30 @@
-"""
-Program predpostavlja obstojeco, urejeno bazo s podatki za dolocen prodajni segment. Omogoca klcanje podatkov iz baze in vrne excel datoteko s strukturiranim zapisom prodajnega programa
+############################# HEADER ######################################
+#
+# beri obstojeco sqlite bazo in zapisi .xlsx datoteko
+#
+###########################################################################
 
-"""
-from pathlib import Path
+# imports
 from re import sub, split
-from itertools import count
-from csv import writer, reader, QUOTE_MINIMAL
-from collections import defaultdict
 import sqlite3
 from openpyxl import Workbook, styles
 
 
 # region VpisExcel
+# class Baza():
 
-segment = 'chiller'
-skupine = None
+#     def __init__(self, segment='chiller', skupine=None, izvedbe = None, velikosti = None, velikosti_cevni = None):
+#         self.segment = segment
+#         self.skupine = skupine
+#         self.izvedbe = izvedbe
+#         self.velikosti = velikosti
+#         self.velikosti_cevni = velikosti_cevni
+
+segment='chiller'
+skupine=None
 izvedbe = None
 velikosti = None
 velikosti_cevni = None
-prevodi = dict()
 
 def poisci_skupine():
     global skupine
@@ -53,6 +59,7 @@ def poisci_velikosti(skupina, izvedba):
                     ORDER BY NumID'''.format('Size', skupina, izvedba))
     velikosti = [i[0] for i in baza.fetchall() if i[-1] != 'T']
     b.close()
+    print(velikosti)
     return velikosti
 
 def poisci_velikosti_cevni(skupina, izvedba):
@@ -280,6 +287,6 @@ def main2():
             stran.temp_dimenzioniraj()
         dat.ex_zbrisi_sheet()
         dat.ex_shrani()
-# main2()
+main2()
     
 # endregion

@@ -10,6 +10,8 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QFrame, QTableView, QComboBox, QFileDialog
 from PyQt5.QtCore import QRect, QSize
 
+import sqlite.func_baza as fba
+
 class Ui_Izberi(QWidget):
     def setupUi(self, MainWindow):
         # postavi glavni gradnik
@@ -50,28 +52,59 @@ class Ui_Izberi(QWidget):
         izberiSegmentLb = QLabel(self.centralWidget)
         izberiSegmentLb.setGeometry(QRect(40, 290, 90, 20))
         izberiSegmentLb.setText("Izberi segment")
-        izberiSegmentCb = QComboBox(self.centralWidget)
-        izberiSegmentCb.setGeometry(QRect(240, 290, 260, 20))
-        segmenti = ["residential", "comercial"]
-        izberiSegmentCb.addItems(segmenti)
+        self.izberiSegmentCb = QComboBox(self.centralWidget)
+        self.izberiSegmentCb.setGeometry(QRect(240, 290, 260, 20))
+        self.izberiSegmentCb.addItems(['chiller', 'heat pump'])
 
         izberiModelLb = QLabel(self.centralWidget)
         izberiModelLb.setGeometry(QRect(40, 320, 90, 20))
         izberiModelLb.setText("Izberi model")
-        izberiModelCb = QComboBox(self.centralWidget)
-        izberiModelCb.setGeometry(QRect(240, 320, 260, 20))
+        self.izberiModelCb = QComboBox(self.centralWidget)
+        self.izberiModelCb.setGeometry(QRect(240, 320, 260, 20))
+        # preberi bazo za modele, izvedbo, velikosti
+        self.baza = fba.Baza()
+        self.baza.povezi_bazo()
+        self.izberiModelCb.addItems(self.baza.poisci_modele())
+        self.izberiModelCb.currentTextChanged.connect(self.posodobi_izvedbe)
+
+        izberiIzvedboLb = QLabel(self.centralWidget)
+        izberiIzvedboLb.setGeometry(QRect(40, 350, 90, 20))
+        izberiIzvedboLb.setText("Izberi izvedbo")
+        self.izberiIzvedboCb = QComboBox(self.centralWidget)
+        self.izberiIzvedboCb.setGeometry(QRect(240, 350, 260, 20))
+        self.izberiIzvedboCb.currentTextChanged.connect(self.posodobi_velikosti)
 
         izberiVelikostLb = QLabel(self.centralWidget)
-        izberiVelikostLb.setGeometry(QRect(40, 350, 90, 20))
+        izberiVelikostLb.setGeometry(QRect(40, 380, 90, 20))
         izberiVelikostLb.setText("Izberi velikost")
-        izberiVelikostCb = QComboBox(self.centralWidget)
-        izberiVelikostCb.setGeometry(QRect(240, 350, 260, 20))
+        self.izberiVelikostCb = QComboBox(self.centralWidget)
+        self.izberiVelikostCb.setGeometry(QRect(240, 380, 260, 20))
 
         # gumb dodaj
         dodajPostavkoBtn = QPushButton("Dodaj postavko", self.centralWidget)
-        dodajPostavkoBtn.setGeometry(QRect(380, 380, 120, 28))
+        dodajPostavkoBtn.setGeometry(QRect(380, 410, 120, 28))
+        dodajPostavkoBtn.clicked.connect(self.dodaj_postavko)
+        
         MainWindow.setCentralWidget(self.centralWidget)
 
     def fileDialog(self):
         fname = QFileDialog.getExistingDirectory(self, "Izberi mapo")
         self.lokacijaExcelLe.setText(fname)
+    
+    def posodobi_izvedbe(self):
+        _ = self.baza.poisci_izvedbe(self.izberiModelCb.currentText())
+        self.izberiIzvedboCb.clear()
+        self.izberiIzvedboCb.addItems(_)
+
+    def posodobi_velikosti(self):
+        try:
+            _ = self.baza.poisci_velikost(
+                self.izberiModelCb.currentText(),
+                self.izberiIzvedboCb.currentText())
+            self.izberiVelikostCb.clear()
+            self.izberiVelikostCb.addItems(_)
+        except:
+            pass
+
+    def dodaj_postavko(self):
+        print('deluje')

@@ -17,7 +17,7 @@ class Ui_Zacetek():
     def setupUi(self, MainWindow):
         # nastavitev fonta, ikone, velikosti okna, naslova
         MainWindow.setWindowTitle("Projektantski popis")
-        MainWindow.setFixedSize(QSize(525, 430))
+        MainWindow.setFixedSize(QSize(525, 460))
         font = QFont()
         font.setPointSize(10)
         MainWindow.setFont(font)
@@ -49,19 +49,19 @@ class Ui_Zacetek():
         # horizontalni prostor, gumb Nov popis
         self.novPopisHLayout = QHBoxLayout()
         self.skupniVLayout.addLayout(self.novPopisHLayout)
-        self.prostorNovPopL = QSpacerItem(80, 40, QSizePolicy.Minimum)
-        self.prostorNovPopR = QSpacerItem(80, 40, QSizePolicy.Minimum)
+        self.prostorNovPopL = QSpacerItem(80, 30, QSizePolicy.Minimum)
+        self.prostorNovPopR = QSpacerItem(80, 30, QSizePolicy.Minimum)
         self.novPopisBtn = QPushButton("Nov popis")
         self.novPopisBtn.setFixedSize(QSize(120, 40))
         self.novPopisHLayout.addSpacerItem(self.prostorNovPopL)
         self.novPopisHLayout.addWidget(self.novPopisBtn)
         self.novPopisHLayout.addSpacerItem(self.prostorNovPopR)
-        # horizontalni prostor, gumb Popravi popis
+        # horizontalni prostor, gumb Posodobi bazo
         self.popraviPopisHLayout = QHBoxLayout()
         self.skupniVLayout.addLayout(self.popraviPopisHLayout)
         self.prostorPopPopL = QSpacerItem(80, 30, QSizePolicy.Minimum)
         self.prostorPopPopR = QSpacerItem(80, 30, QSizePolicy.Minimum)
-        self.popraviPopisBtn = QPushButton("Popravi popis")
+        self.popraviPopisBtn = QPushButton("Posodobi bazo")
         self.popraviPopisBtn.setFixedSize(QSize(120, 30))
         self.popraviPopisHLayout.addSpacerItem(self.prostorPopPopL)
         self.popraviPopisHLayout.addWidget(self.popraviPopisBtn)
