@@ -16,7 +16,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 # from PyQt5.QtWidgets import QApplication, QMainWindow
 import sys
 
-
 class Ui_MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
@@ -36,7 +35,6 @@ class Ui_MainWindow(QMainWindow):
         # odpri dialog, lokacija excel datoteke
         self.uiOkno.lokacijaExcelBtn.clicked.connect(self.uiOkno.fileDialog)
         self.uiOkno.zakljuciZapisBtn.clicked.connect(self.zacni_tu)
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

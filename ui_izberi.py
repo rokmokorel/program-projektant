@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QFrame, QCo
 # from PyQt5.QtGui import QTableView
 from PyQt5.QtCore import QRect, QSize
 
+import tabela as tab
 import sqlite.func_baza as fba
 
 class Ui_Izberi(QWidget):
@@ -22,18 +23,16 @@ class Ui_Izberi(QWidget):
         self.lokacijaExcelBtn.setGeometry(QRect(40, 19, 100, 24))
         self.lokacijaExcelLe = QLineEdit(self.centralWidget)
         self.lokacijaExcelLe.setGeometry(QRect(160, 20, 340, 22))
-        
         # zakljuci zapis
         self.zakljuciZapisBtn = QPushButton(self.centralWidget)
         self.zakljuciZapisBtn.setGeometry(QRect(380, 50, 120, 28))
         self.zakljuciZapisBtn.setText("Zaključi zapis")
         # tabela dodane postavke
         dodanePostavkeLb = QLabel(self.centralWidget)
-        dodanePostavkeLb.setGeometry(QRect(40, 100, 100, 20))
+        dodanePostavkeLb.setGeometry(QRect(40, 80, 100, 20))
         dodanePostavkeLb.setText("Dodane postavke")
-        self.dodanePostavkeTb = QTableWidget(self.centralWidget)
-        self.dodanePostavkeTb.setGeometry(QRect(160, 100, 340, 90))
-        self.tabelaPostavke()
+        self.dodanePostavkeTb = tab.Ui_Tabela(self.centralWidget)
+        self.dodanePostavkeTb.setupUi(self.centralWidget)
 
         # skupaj
         skupajLb = QLabel(self.centralWidget)
@@ -41,7 +40,6 @@ class Ui_Izberi(QWidget):
         skupajLe = QLineEdit(self.centralWidget)
         skupajLe.setGeometry(QRect(380, 200, 120, 22))
         skupajLb.setText("Skupaj")
-
         # horizontala
         delitev = QFrame(self.centralWidget)
         delitev.setGeometry(QRect(7, 230, 513, 20))
@@ -67,7 +65,6 @@ class Ui_Izberi(QWidget):
         self.izberiModelCb.setGeometry(QRect(240, 320, 260, 20))
         self.izberiModelCb.currentTextChanged.connect(self.posodobi_izvedbe)
 
-
         izberiIzvedboLb = QLabel(self.centralWidget)
         izberiIzvedboLb.setGeometry(QRect(40, 350, 90, 20))
         izberiIzvedboLb.setText("Izberi izvedbo")
@@ -80,21 +77,12 @@ class Ui_Izberi(QWidget):
         izberiVelikostLb.setText("Izberi velikost")
         self.izberiVelikostCb = QComboBox(self.centralWidget)
         self.izberiVelikostCb.setGeometry(QRect(240, 380, 260, 20))
-
         # gumb dodaj
         dodajPostavkoBtn = QPushButton("Dodaj postavko", self.centralWidget)
         dodajPostavkoBtn.setGeometry(QRect(380, 410, 120, 28))
         dodajPostavkoBtn.clicked.connect(self.dodaj_postavko)
-        
+        # glavni gradnik postavimo v okno
         MainWindow.setCentralWidget(self.centralWidget)
-
-    def tabelaPostavke(self):
-        self.dodanePostavkeTb.setColumnCount(5)
-        self.dodanePostavkeTb.setRowCount(2)
-        self.dodanePostavkeTb.setItem(0, 0, QTableWidgetItem("Model"))
-        self.dodanePostavkeTb.setItem(0, 1, QTableWidgetItem("Izvedba"))
-        self.dodanePostavkeTb.setItem(0, 2, QTableWidgetItem("Velikost"))
-        self.dodanePostavkeTb.setItem(0, 3, QTableWidgetItem("Količina"))
 
     def fileDialog(self):
         fname = QFileDialog.getExistingDirectory(self, "Izberi mapo")
@@ -112,7 +100,6 @@ class Ui_Izberi(QWidget):
             self.posodobi_izvedbe()
         else:
             pass
-
 
     def posodobi_izvedbe(self):
         self.izberiIzvedboCb.clear()
@@ -133,4 +120,8 @@ class Ui_Izberi(QWidget):
             pass
 
     def dodaj_postavko(self):
-        print('deluje')
+        model = self.izberiModelCb.currentText()
+        izvedba = self.izberiIzvedboCb.currentText()
+        velikost = self.izberiVelikostCb.currentText()
+        print([model, izvedba, velikost])
+        self.dodanePostavkeTb.dodajStolpec(model, izvedba, velikost)
