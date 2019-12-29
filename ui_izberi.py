@@ -1,10 +1,11 @@
-########################### ui_zacetek.py ####################################
+########################### ui_izberi.py ####################################
 #
-# razred zacetnega okna aplikacije
+# razred okna za izbor enot, dodajanje enot v excel popis
 #
 # MainWindow - osnovno okolje okoli gradnikov/widgetov
 # Widget - gradnik funkcionalnosti
 # Layout - prostor, kjer prebivajo gradniki
+#
 #############################################################################
 
 from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QFrame, QComboBox, QFileDialog, QTableWidget, QTableWidgetItem, QTableView
@@ -13,6 +14,7 @@ from PyQt5.QtCore import QRect, QSize
 
 import tabela as tab
 import sqlite.func_baza as fba
+
 
 class Ui_Izberi(QWidget):
     def setupUi(self, MainWindow):
@@ -123,5 +125,5 @@ class Ui_Izberi(QWidget):
         model = self.izberiModelCb.currentText()
         izvedba = self.izberiIzvedboCb.currentText()
         velikost = self.izberiVelikostCb.currentText()
-        print([model, izvedba, velikost])
+        print(model, izvedba, velikost)
         self.dodanePostavkeTb.dodajStolpec(model, izvedba, velikost)

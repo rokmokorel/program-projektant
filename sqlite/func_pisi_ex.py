@@ -10,74 +10,8 @@ import sqlite3
 from openpyxl import Workbook, styles
 
 
-# region VpisExcel
-# class Baza():
-
-#     def __init__(self, segment='chiller', skupine=None, izvedbe = None, velikosti = None, velikosti_cevni = None):
-#         self.segment = segment
-#         self.skupine = skupine
-#         self.izvedbe = izvedbe
-#         self.velikosti = velikosti
-#         self.velikosti_cevni = velikosti_cevni
-
-segment='chiller'
-skupine=None
-izvedbe = None
-velikosti = None
-velikosti_cevni = None
-
-def poisci_skupine():
-    global skupine
-    b = sqlite3.connect("SQL_"+segment+".db")
-    baza = b.cursor()
-    baza.execute('''SELECT DISTINCT "{}" 
-                    FROM "GENERAL" 
-                    ORDER BY NumID'''.format('Group'))
-    skupine = [i[0] for i in baza.fetchall()]
-    b.close()
-    return skupine
-
-def poisci_izvedbe(skupina):
-    global izvedbe
-    b = sqlite3.connect("SQL_"+segment+".db")
-    baza = b.cursor()
-    baza.execute('''SELECT DISTINCT "{}" 
-                    FROM "GENERAL"
-                    WHERE "Group"="{}"
-                    ORDER BY NumID'''.format('Version', skupina))
-    izvedbe = [i[0] for i in baza.fetchall()]
-    b.close()
-    return izvedbe
-
-def poisci_velikosti(skupina, izvedba):
-    global velikosti
-    b = sqlite3.connect("SQL_"+segment+".db")
-    baza = b.cursor()
-    baza.execute('''SELECT DISTINCT "{}" 
-                    FROM "GENERAL"
-                    WHERE "Group"="{}" AND Version="{}"
-                    ORDER BY NumID'''.format('Size', skupina, izvedba))
-    velikosti = [i[0] for i in baza.fetchall() if i[-1] != 'T']
-    b.close()
-    print(velikosti)
-    return velikosti
-
-def poisci_velikosti_cevni(skupina, izvedba):
-    global velikosti_cevni
-    b = sqlite3.connect("SQL_"+segment+".db")
-    baza = b.cursor()
-    baza.execute('''SELECT DISTINCT "{}" 
-                    FROM "GENERAL"
-                    WHERE "Group"="{}" AND Version={}
-                    ORDER BY NumID'''.format('Size', skupina, izvedba))
-    velikosti_cevni = [i[0] for i in baza.fetchall() if i[-1] == 'T']
-    b.close()
-    return velikosti_cevni
-
 class ExDatoteka:
     st_opis = 0
-    st_list = 0
-    st_zvezek = 0
     zvezek = Workbook()
     ex_skupina = 'Neznano'
     ex_izvedbe = set()
@@ -85,11 +19,11 @@ class ExDatoteka:
     def __init__(self, ex_skupina):
         ExDatoteka.ex_skupina = ex_skupina
         ExDatoteka.st_opis = 0
-        ExDatoteka.st_zvezek += 1
         ExDatoteka.zvezek = Workbook()
 
     @classmethod
     def ex_shrani(self):
+        self.ex_zbrisi_sheet()
         ExDatoteka.zvezek.save(self.ex_skupina + '.xlsx')
     
     @classmethod
@@ -100,10 +34,6 @@ class ExDatoteka:
 class ExStran(ExDatoteka):
 
     ex_opis = '***Splošni opis enote***'
-    # postavke = [('Hladilna moč', 'kW'), ('EER (EN14511 metoda)', ''), 
-    #     ('ESEER (EN14511 metoda)', ''), ('SEER (Reg. EU 2016/2281)', ''), ('Električna moč', 'kW'), ('El. priključek', ''), 
-    #     ('Zvočni tlak (SPL)', 'dB(A)'), ('Zvočna moč (PWL)', 'dB(A)'),
-    #     ('Število hladilnih krogov', ''), ('Število kompresorjev', ''), ('Dolžina', 'mm'), ('Širina', 'mm'),('Višina', 'mm'), ('Teža', 'kg')]
     
     postavke = [('Hladilna moč', 'kW'), ('EER (EN14511 metoda)', ''), 
         ('ESEER (EN14511 metoda)', ''), ('SEER (Reg. EU 2016/2281)', ''),
@@ -121,8 +51,10 @@ class ExStran(ExDatoteka):
             self.ex_stran = ExDatoteka.zvezek[temp_ime_lista]
 
         ExDatoteka.ex_izvedbe.add(ex_izvedba)
-        ExDatoteka.st_list += 1
         ExDatoteka.st_opis = 0
+
+        self.temp_naslovna_vr()
+        self.temp_dimenzioniraj()
     
     def temp_naslovna_vr(self):
         naslovna = ['Zap. št.', 'Prodajni program', 'Količina',
@@ -191,7 +123,8 @@ class ExOpis(ExStran):
         return ' '.join(['Hladilni agragat Climaveneta', self.ex_productID])
     
     def ex_dimenzije(self):
-        b = sqlite3.connect("SQL_"+segment+".db")
+        # povezava na bazo
+        b = sqlite3.connect("sqlite\SQL_chiller.db")
         baza = b.cursor()
         baza.execute('''SELECT "A", "B", "H" 
                         FROM GENERAL
@@ -219,8 +152,8 @@ class ExOpis(ExStran):
         Višina:
         Teža:
         '''
-
-        b = sqlite3.connect("SQL_"+segment+".db")
+        # povezava na bazo
+        b = sqlite3.connect("sqlite\SQL_chiller.db")
         baza = b.cursor()
         baza.execute('''SELECT "Cooling capacity" 
                         FROM COOLING_EUROVENT
@@ -268,25 +201,22 @@ class ExOpis(ExStran):
         print(self.tehnicni_podatki)
         return self.tehnicni_podatki
 
+# endregion
 
 def main2():
-    poisci_skupine()
-    for sk in skupine:
-        dat = ExDatoteka(sk)
-        # datoteka se nanasa na skupini agregatov
-        for iz in poisci_izvedbe(sk):
-            stran = ExStran(iz)
-            # dat.zamenjaj_list()
-            # dodaj stil strani
-            for vel in poisci_velikosti(sk, iz):
-                opis = ExOpis(stran, vel)
-                opis.ex_teh_opis()
-                stran.ex_zapisi_podatke(opis)
-                # print(opis.tehnicni_podatki)
-            stran.temp_naslovna_vr()
-            stran.temp_dimenzioniraj()
-        dat.ex_zbrisi_sheet()
-        dat.ex_shrani()
+
+    sk = 'i-NX'
+    dat = ExDatoteka(sk)
+
+    iz = 'K'
+    stran = ExStran(iz)
+    
+    vel = '0151P'
+    opis = ExOpis(stran, vel)
+    opis.ex_teh_opis()
+    stran.ex_zapisi_podatke(opis)
+    
+    dat.ex_shrani()
+
 main2()
     
-# endregion

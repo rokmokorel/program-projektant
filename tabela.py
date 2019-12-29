@@ -24,18 +24,6 @@ class Ui_Tabela(QWidget):
         self.tabela.setColumnCount(5)
         self.tabela.setObjectName("tableWidget")
         # podatki glava
-        # item = QTableWidgetItem()
-        # self.tabela.setVerticalHeaderItem(0, item)
-        # self.tabela.setVerticalHeaderItem(1, item)
-        # self.tabela.setVerticalHeaderItem(2, item)
-        # self.tabela.setVerticalHeaderItem(3, item)
-        # self.tabela.setVerticalHeaderItem(4, item)
-        # self.tabela.setHorizontalHeaderItem(0, item)
-        # self.tabela.setHorizontalHeaderItem(1, item)
-        # self.tabela.setHorizontalHeaderItem(2, item)
-        # self.tabela.setHorizontalHeaderItem(3, item)
-        # self.tabela.setHorizontalHeaderItem(4, item)
-        # nastavitev tabele
         self.tabela.horizontalHeader().setVisible(False)
         self.tabela.verticalHeader().setVisible(False)
         self.tabela.horizontalHeader().setDefaultSectionSize(92)

@@ -5,6 +5,7 @@
 # MainWindow - osnovno okolje okoli gradnikov/widgetov
 # Widget - gradnik funkcionalnosti
 # Layout - prostor, kjer prebivajo gradniki
+#
 #############################################################################
 
 from PyQt5.QtWidgets import QWidget, QPushButton, QLineEdit, QLabel, QHBoxLayout, QVBoxLayout, QSpacerItem, QSizePolicy, QFileDialog
@@ -12,8 +13,7 @@ from PyQt5.QtGui import QIcon, QFont, QPixmap
 from PyQt5.QtCore import QSize
 
 
-class Ui_Zacetek():
-
+class Ui_Zacetek(QWidget):
     def setupUi(self, MainWindow):
         # nastavitev fonta, ikone, velikosti okna, naslova
         MainWindow.setWindowTitle("Projektantski popis")
