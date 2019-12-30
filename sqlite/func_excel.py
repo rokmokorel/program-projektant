@@ -12,20 +12,20 @@ from openpyxl import Workbook, styles
 
 class ExDatoteka:
 
-    def __init__(self, projekt='popis'):
-        ExDatoteka.projekt = projekt
-        ExDatoteka.zvezek = Workbook()
+    def __init__(self):
+        self.zvezek = Workbook()
+        self.pot = ''
+        self.ime_dat = 'popis'
 
-    @classmethod
     def ex_shrani(self):
-        # self.ex_zbrisi_sheet()
-        ExDatoteka.zvezek.save(ExDatoteka.projekt+'.xlsx')
-    
-    @classmethod
+        try:
+            self.zvezek.save(self.pot + '/' + self.ime_dat+'.xlsx')
+        except:
+            self.zvezek.save(self.ime_dat+'.xlsx')
+
     def ex_zbrisi_sheet(self):
-    
-        std = ExDatoteka.zvezek.get_sheet_by_name('Sheet')
-        ExDatoteka.zvezek.remove_sheet(std)
+        std = self.zvezek.get_sheet_by_name('Sheet')
+        self.zvezek.remove_sheet(std)
 
 
 class ExStran(ExDatoteka):

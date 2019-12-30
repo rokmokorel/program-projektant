@@ -14,6 +14,7 @@ from PyQt5.QtGui import QFont
 
 
 class Ui_Projekt(QWidget):
+    
     def setupUi(self, MainWindow):
         self.centralWidget = QWidget(MainWindow)
         naslovLb = QLabel(self.centralWidget)

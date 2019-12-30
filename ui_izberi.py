@@ -17,6 +17,11 @@ import sqlite.func_baza as fba
 import sqlite.func_excel as exc
 
 class Ui_Izberi(QWidget):
+    
+    def __init__(self):
+        super().__init__()
+        self.projekt = dict()
+
     def setupUi(self, MainWindow):
         # postavi glavni gradnik
         self.centralWidget = QWidget(MainWindow)
@@ -132,13 +137,18 @@ class Ui_Izberi(QWidget):
         self.postavkeTb.dodajVrstico(model, izvedba, velikost, kolicina, cena)
 
     def zakljuci_zapis(self):
-        print('zaklučujem')
+        # prebere trenutne vrednosti v tabeli
         self.postavkeTb.trenutnoVTabeli()
+        # če so vrednosti v tabeli
         if self.postavkeTb.dodane:
-            print('pisem')
             baza = fba.Baza()
             baza.povezi_bazo()
+            # kreiranje excel zvezka
             zvezek = exc.ExDatoteka()
+            # shranimo podatke o projetku v excel
+            zvezek.ime_dat = self.projekt['naziv']
+            zvezek.pot = self.lokacijaExcelLe.text()
+            
             stran = exc.ExStran(zvezek)
             for mo, iz, vel, kol, cena in self.postavkeTb.dodane:
                 productID = baza.poisci_productID(mo, iz, vel)

@@ -21,7 +21,7 @@ class Ui_Zacetek(QWidget):
         font = QFont()
         font.setPointSize(10)
         MainWindow.setFont(font)
-        app_icon = QIcon('logo/logo2_256.ico')
+        app_icon = QIcon('logo/logo_256.ico')
         MainWindow.setWindowIcon(app_icon)
 
         # glavni gradnik in skupni vertikalni prostor
