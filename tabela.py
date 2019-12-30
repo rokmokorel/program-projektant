@@ -10,6 +10,10 @@ from PyQt5.QtCore import QRect, QSize, Qt, QCoreApplication, QMetaObject
 from PyQt5.QtGui import QBrush, QColor
 
 class Ui_Tabela(QWidget):
+    
+    def __init__(self):
+        self.dodane = []
+
     def setupUi(self, WidgetHolder):
         self.tabela = QTableWidget(WidgetHolder)
         self.tabela.setGeometry(QRect(40, 100, 460, 90))
@@ -58,12 +62,19 @@ class Ui_Tabela(QWidget):
         self.tabela.setItem(0, 4, item)
         QMetaObject.connectSlotsByName(WidgetHolder)
 
-    def dodajStolpec(self, model, izvedba, velikost):
-        vr = self.tabela.rowCount()
-        self.tabela.insertRow(vr)
-        # vnesi tekst
-        self.tabela.setItem(vr, 0, QTableWidgetItem(model))
-        self.tabela.setItem(vr, 1, QTableWidgetItem(izvedba))
-        self.tabela.setItem(vr, 2, QTableWidgetItem(velikost))
-        self.tabela.setItem(vr, 3, QTableWidgetItem('1'))
-        self.tabela.setItem(vr, 4, QTableWidgetItem('***100,00'))
+    def dodajVrstico(self, model, izvedba, velikost, kolicina, cena):
+        if model and izvedba and velikost:
+            vr = self.tabela.rowCount()
+            self.tabela.insertRow(vr)
+            # vnesi tekst
+            self.tabela.setItem(vr, 0, QTableWidgetItem(model))
+            self.tabela.setItem(vr, 1, QTableWidgetItem(izvedba))
+            self.tabela.setItem(vr, 2, QTableWidgetItem(velikost))
+            self.tabela.setItem(vr, 3, QTableWidgetItem(f'{kolicina} kos'))
+            self.tabela.setItem(vr, 4, QTableWidgetItem(f'{cena},00'))
+
+    def trenutnoVTabeli(self):
+        self.dodane = [('NECS', 'SL', '1314', '2', '1000')]
+        # self.dodane.append((model, izvedba, velikost, kolicina, cena))
+
+

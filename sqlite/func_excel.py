@@ -5,7 +5,7 @@
 ###########################################################################
 
 # imports
-from opis import ExOpis
+from sqlite.opis import ExOpis
 
 from re import sub, split
 from openpyxl import Workbook, styles
@@ -72,7 +72,7 @@ class ExStran(ExDatoteka):
         self.temp_naslovna_vr()
         self.temp_dimenzioniraj()
 
-    def zapisi_postavko(self, productID, kolicina=1):
+    def zapisi_postavko(self, productID, kolicina=1, cena=1):
         opis = ExOpis(productID)
         # vpis zaporedne stevilke
         self.ex_stran.cell(column=1, row=self.r_kurzor, 
@@ -85,6 +85,12 @@ class ExStran(ExDatoteka):
         # vpis kolicine
         self.ex_stran.cell(column=3, row=self.r_kurzor - 1, 
             value = kolicina)
+        # vpis cene/kos
+        self.ex_stran.cell(column=4, row=self.r_kurzor - 1, 
+            value = cena)
+        # cena
+        self.ex_stran.cell(column=5, row=self.r_kurzor - 1, 
+            value = int(kolicina)*int(cena))
         # ustvarjenim celicam dodamo oblikovanje
         # self.temp_krepko()
         # premaknemo kurzor za vstavljanje nove postavke

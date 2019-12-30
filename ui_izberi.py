@@ -14,7 +14,7 @@ from PyQt5.QtCore import QRect, QSize
 
 import tabela as tab
 import sqlite.func_baza as fba
-
+import sqlite.func_excel as exc
 
 class Ui_Izberi(QWidget):
     def setupUi(self, MainWindow):
@@ -29,12 +29,13 @@ class Ui_Izberi(QWidget):
         self.zakljuciZapisBtn = QPushButton(self.centralWidget)
         self.zakljuciZapisBtn.setGeometry(QRect(380, 50, 120, 28))
         self.zakljuciZapisBtn.setText("Zaključi zapis")
+        self.zakljuciZapisBtn.clicked.connect(self.zakljuci_zapis)
         # tabela dodane postavke
         dodanePostavkeLb = QLabel(self.centralWidget)
         dodanePostavkeLb.setGeometry(QRect(40, 80, 100, 20))
         dodanePostavkeLb.setText("Dodane postavke")
-        self.dodanePostavkeTb = tab.Ui_Tabela(self.centralWidget)
-        self.dodanePostavkeTb.setupUi(self.centralWidget)
+        self.postavkeTb = tab.Ui_Tabela()
+        self.postavkeTb.setupUi(self.centralWidget)
 
         # skupaj
         skupajLb = QLabel(self.centralWidget)
@@ -125,5 +126,24 @@ class Ui_Izberi(QWidget):
         model = self.izberiModelCb.currentText()
         izvedba = self.izberiIzvedboCb.currentText()
         velikost = self.izberiVelikostCb.currentText()
-        print(model, izvedba, velikost)
-        self.dodanePostavkeTb.dodajStolpec(model, izvedba, velikost)
+        kolicina = 1
+        # TODO: Funkcija, ki vrne ceno glede na izbrano postavko
+        cena = 1000
+        self.postavkeTb.dodajVrstico(model, izvedba, velikost, kolicina, cena)
+
+    def zakljuci_zapis(self):
+        print('zaklučujem')
+        self.postavkeTb.trenutnoVTabeli()
+        if self.postavkeTb.dodane:
+            print('pisem')
+            baza = fba.Baza()
+            baza.povezi_bazo()
+            zvezek = exc.ExDatoteka()
+            stran = exc.ExStran(zvezek)
+            for element in self.postavkeTb.dodane:
+                mo, iz, vel, kol, cen = element
+                productID = baza.poisci_productID(mo, iz, vel)
+                print(productID)
+                stran.zapisi_postavko(productID, kol, cen)
+            stran.zapri()
+            zvezek.ex_shrani()

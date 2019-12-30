@@ -25,6 +25,17 @@ class Baza():
         b_path = "SQL_" + self.segment + ".db"
         self.pot_baza = os.path.join(f_path,b_path)
 
+    def poisci_productID(self, mo, iz, vel):
+        b = sqlite3.connect(self.pot_baza)
+        baza = b.cursor()
+        baza.execute('''SELECT DISTINCT "{}" 
+                        FROM "GENERAL"
+                        WHERE "Group"="{}" AND Version="{}" AND Size="{}"
+                        ORDER BY NumID'''.format('ProductID', mo, iz, vel))
+        productID = baza.fetchone()[0]
+        b.close()
+        return productID
+
     def poisci_modele(self):
         """Poisci vse izvedbe za 
         """
