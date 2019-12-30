@@ -84,10 +84,10 @@ class ExStran(ExDatoteka):
             self.r_kurzor += 1
         # vpis kolicine
         self.ex_stran.cell(column=3, row=self.r_kurzor - 1, 
-            value = kolicina)
+            value = int(kolicina))
         # vpis cene/kos
         self.ex_stran.cell(column=4, row=self.r_kurzor - 1, 
-            value = cena)
+            value = int(cena))
         # cena
         self.ex_stran.cell(column=5, row=self.r_kurzor - 1, 
             value = int(kolicina)*int(cena))

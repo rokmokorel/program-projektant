@@ -74,7 +74,19 @@ class Ui_Tabela(QWidget):
             self.tabela.setItem(vr, 4, QTableWidgetItem(f'{cena},00'))
 
     def trenutnoVTabeli(self):
-        self.dodane = [('NECS', 'SL', '1314', '2', '1000')]
-        # self.dodane.append((model, izvedba, velikost, kolicina, cena))
+        vrstic = self.tabela.rowCount()
+        for vr in range(1, vrstic):
+            mod = self.tabela.item(vr, 0)
+            mod = mod.text()
+            iz = self.tabela.item(vr, 1)
+            iz = iz.text()
+            vel = self.tabela.item(vr, 2)
+            vel = vel.text()
+            kol = self.tabela.item(vr, 3)
+            kol = kol.text()
+            cena = self.tabela.item(vr, 4)
+            cena = cena.text()
+            self.dodane.append((mod, iz, vel, kol, cena))
+        print(self.dodane)
 
 

@@ -140,10 +140,11 @@ class Ui_Izberi(QWidget):
             baza.povezi_bazo()
             zvezek = exc.ExDatoteka()
             stran = exc.ExStran(zvezek)
-            for element in self.postavkeTb.dodane:
-                mo, iz, vel, kol, cen = element
+            for mo, iz, vel, kol, cena in self.postavkeTb.dodane:
                 productID = baza.poisci_productID(mo, iz, vel)
                 print(productID)
-                stran.zapisi_postavko(productID, kol, cen)
+                kol = kol.split(' ')[0]
+                cena = cena.split(',')[0]
+                stran.zapisi_postavko(productID, kol, cena)
             stran.zapri()
             zvezek.ex_shrani()
