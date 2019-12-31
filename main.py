@@ -12,6 +12,7 @@
 from ui_zacetek import *
 from ui_izberi import *
 from ui_projekt import *
+from mail.py import *
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
