@@ -6,20 +6,32 @@
 
 import smtplib, ssl
 
-port = 587  # For starttls
-smtp_server = "smtp.gmail.com"
-sender_email = "6projektant@gmail.com"
-receiver_email = "rok.mokorel@gmail.com"
-password = input("Type your password and press enter:")
-message = """\
+class Mail():
+
+    def __init__(self):
+        self.port = 587  # For starttls
+        self.smtp_server = "smtp.gmail.com"
+        self.posiljatelj = "6projektant@gmail.com"
+        self.prejemnik = "rok.mokorel@gmail.com"
+        self.geslo = 'projektmisija'
+
+        self.vsebina = """UPDATE projekta: projektant
+
+        Sporočilo iz programa.
+        """
+        
+    def sporocilo(self, objekt):
+        self.podatki = objekt
+        self.vsebina = """\
 Subject: Hi there
 
 This message is sent from Python."""
 
-context = ssl.create_default_context()
-with smtplib.SMTP(smtp_server, port) as server:
-    server.ehlo()  # Can be omitted
-    server.starttls(context=context)
-    server.ehlo()  # Can be omitted
-    server.login(sender_email, password)
-    server.sendmail(sender_email, receiver_email, message)
+    def poslji(self):
+        kontekst = ssl.create_default_context()
+        with smtplib.SMTP(self.smtp_server, self.port) as server:
+            server.ehlo()  # lahko izpustimo
+            server.starttls(context=kontekst)
+            server.ehlo()  # lahko izpustimo
+            server.login(self.posiljatelj, self.geslo)
+            server.sendmail(self.posiljatelj, self.prejemnik, self.vsebina)

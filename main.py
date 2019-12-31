@@ -12,7 +12,7 @@
 from ui_zacetek import *
 from ui_izberi import *
 from ui_projekt import *
-from mail.py import *
+from mail import *
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -23,7 +23,10 @@ import sys
 class Ui_MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
-        self.projekt = {'naziv': None, 'narocnik': None, 'lokacija': None,          'izvajalec': None, 'pricetek': None, 'posebnosti': None}
+        # splosni podatki o projektantu in projektu
+        self.projekt = {'projektant': 'Rok Mokorel','naziv': None, 
+        'narocnik': None, 'lokacija': None, 'izvajalec': None, 'pricetek': None,'posebnosti': None}
+        self.mail = Mail()
         self.uiZacetek = Ui_Zacetek()
         self.uiProjekt = Ui_Projekt()
         self.uiOkno = Ui_Izberi()
@@ -39,14 +42,24 @@ class Ui_MainWindow(QMainWindow):
         self.uiProjekt.setupUi(self)
         self.uiProjekt.nadaljujBtn.clicked.connect(self.info_projekt)
         self.uiProjekt.nadaljujBtn.clicked.connect(self.nadaljuj_tu)
+        self.uiProjekt.nadaljujBtn.clicked.connect(self.mail_podatki)
     
     def nadaljuj_tu(self):
         self.uiOkno.setupUi(self)
         self.uiOkno.projekt = self.projekt
         # odpri dialog, lokacija excel datoteke
         self.uiOkno.lokacijaExcelBtn.clicked.connect(self.uiOkno.fileDialog)
+        
         self.uiOkno.zakljuciZapisBtn.clicked.connect(self.zacni_tu)
+        self.uiOkno.zakljuciZapisBtn.clicked.connect(self.mail_posli)
 
+    def mail_podatki(self):
+        self.mail.sporocilo(self.projekt)
+        
+    def mail_posli(self):
+        self.mail.poslji()
+
+    # posodobimo splosne podatke o projektu
     def info_projekt(self):
         self.projekt['naziv'] = self.uiProjekt.nazivLe.text()
         self.projekt['narocnik'] = self.uiProjekt.narocnikLe.text()
