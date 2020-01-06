@@ -64,3 +64,11 @@ class Ui_Projekt(QWidget):
         self.nadaljujBtn = QPushButton("Nadaljuj", self.centralWidget)
         self.nadaljujBtn.setGeometry(QRect(380, 410, 120, 28))
         MainWindow.setCentralWidget(self.centralWidget)
+
+    def vrni_vrednosti(self):
+        return (('naziv', self.nazivLe.text()),
+            ('narocnik', self.narocnikLe.text()),
+            ('lokacija', self.lokacijaLe.text()),
+            ('izvajalec', self.izvajalecLe.text()),
+            ('pricetek', self.pricetekLe.text()),
+            ('posebnosti', self.posebnostiPle.toPlainText()))

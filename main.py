@@ -9,24 +9,24 @@
 #
 ###########################################################################
 
+import sys
+from collections import defaultdict
+# from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
 from ui_zacetek import *
 from ui_izberi import *
 from ui_projekt import *
 from mail import *
-
-from PyQt5.QtWidgets import QApplication, QMainWindow
-
-# from PyQt5.QtWidgets import QApplication, QMainWindow
-import sys
 
 
 class Ui_MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
         # splosni podatki o projektantu in projektu
-        self.projekt = {'projektant': 'Projektant 1','naziv': None, 
-        'narocnik': None, 'lokacija': None, 'izvajalec': None, 'pricetek': None,'posebnosti': None}
+        self.podatki = defaultdict(lambda: '')
         self.mail = Mail()
+        # pripravimo razrede za okna
         self.uiZacetek = Ui_Zacetek()
         self.uiProjekt = Ui_Projekt()
         self.uiOkno = Ui_Izberi()
@@ -42,11 +42,11 @@ class Ui_MainWindow(QMainWindow):
         self.uiProjekt.setupUi(self)
         self.uiProjekt.nadaljujBtn.clicked.connect(self.info_projekt)
         self.uiProjekt.nadaljujBtn.clicked.connect(self.nadaljuj_tu)
-        # self.uiProjekt.nadaljujBtn.clicked.connect(self.mail_podatki)
+        self.uiProjekt.nadaljujBtn.clicked.connect(self.mail_podatki)
     
     def nadaljuj_tu(self):
         self.uiOkno.setupUi(self)
-        self.uiOkno.projekt = self.projekt
+        self.uiOkno.projekt = self.podatki
         # odpri dialog, lokacija excel datoteke
         self.uiOkno.lokacijaExcelBtn.clicked.connect(self.uiOkno.fileDialog)
         
@@ -54,19 +54,12 @@ class Ui_MainWindow(QMainWindow):
         # self.uiOkno.zakljuciZapisBtn.clicked.connect(self.mail.poslji)
 
     def mail_podatki(self):
-        self.mail.sporocilo(self.projekt)
-        
-    # def mail_posli(self):
-    #     self.mail.poslji()
+        print(self.mail.sporocilo(self.podatki))
 
     # posodobimo splosne podatke o projektu
     def info_projekt(self):
-        self.projekt['naziv'] = self.uiProjekt.nazivLe.text()
-        self.projekt['narocnik'] = self.uiProjekt.narocnikLe.text()
-        self.projekt['lokacija'] = self.uiProjekt.lokacijaLe.text()
-        self.projekt['izvajalec'] = self.uiProjekt.izvajalecLe.text()
-        self.projekt['pricetek'] = self.uiProjekt.pricetekLe.text()
-        self.projekt['posebnosti'] = self.uiProjekt.posebnostiPle.toPlainText()
+        for key, value in self.uiProjekt.vrni_vrednosti():
+            self.podatki[key] = value
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

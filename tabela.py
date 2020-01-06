@@ -87,6 +87,5 @@ class Ui_Tabela(QWidget):
             cena = self.tabela.item(vr, 4)
             cena = cena.text()
             self.dodane.append((mod, iz, vel, kol, cena))
-        print(self.dodane)
 
 

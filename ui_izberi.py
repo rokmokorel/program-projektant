@@ -20,7 +20,7 @@ class Ui_Izberi(QWidget):
     
     def __init__(self):
         super().__init__()
-        self.projekt = dict()
+        self.podatki = dict()
 
     def setupUi(self, MainWindow):
         # postavi glavni gradnik
@@ -145,11 +145,13 @@ class Ui_Izberi(QWidget):
             baza.povezi_bazo()
             # kreiranje excel zvezka
             zvezek = exc.ExDatoteka()
-            # shranimo podatke o projetku v excel
-            zvezek.ime_dat = self.projekt['naziv']
+            try:
+                zvezek.ime_dat = self.podatki['naziv']
+            except:
+                zvezek.ime_dat = 'popis'
             zvezek.pot = self.lokacijaExcelLe.text()
-            
             stran = exc.ExStran(zvezek)
+            # iteriramo skozi postavke v tabeli
             for mo, iz, vel, kol, cena in self.postavkeTb.dodane:
                 productID = baza.poisci_productID(mo, iz, vel)
                 print(productID)
