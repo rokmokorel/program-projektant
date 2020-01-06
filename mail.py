@@ -19,13 +19,15 @@ class Mail():
 
         Sporočilo iz programa.
         """
-        
-    def sporocilo(self, objekt):
-        self.podatki = objekt
-        self.vsebina = """\
-Subject: Hi there
-
-This message is sent from Python."""
+    # TODO: DEBUG, vrne sporocilo() takes 0 positional arguments but 1 was given
+    def sporocilo(self, **objekt):
+        self.vsebina =  f'NOVI PROJEKT: {objekt["naziv"]}, projektant: \
+            {objekt["projektant"]}'\
+            f''\
+            f'Podatki o projektu: {objekt["naziv"]}'\
+            f'Lokacija: {objekt["lokacija"]}'\
+            f'Naročnik: {objekt["naročnik"]}'
+        return self.vsebina
 
     def poslji(self):
         kontekst = ssl.create_default_context()

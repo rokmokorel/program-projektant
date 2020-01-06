@@ -24,7 +24,7 @@ class Ui_MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
         # splosni podatki o projektantu in projektu
-        self.projekt = {'projektant': 'Rok Mokorel','naziv': None, 
+        self.projekt = {'projektant': 'Projektant 1','naziv': None, 
         'narocnik': None, 'lokacija': None, 'izvajalec': None, 'pricetek': None,'posebnosti': None}
         self.mail = Mail()
         self.uiZacetek = Ui_Zacetek()
@@ -42,7 +42,7 @@ class Ui_MainWindow(QMainWindow):
         self.uiProjekt.setupUi(self)
         self.uiProjekt.nadaljujBtn.clicked.connect(self.info_projekt)
         self.uiProjekt.nadaljujBtn.clicked.connect(self.nadaljuj_tu)
-        self.uiProjekt.nadaljujBtn.clicked.connect(self.mail_podatki)
+        # self.uiProjekt.nadaljujBtn.clicked.connect(self.mail_podatki)
     
     def nadaljuj_tu(self):
         self.uiOkno.setupUi(self)
@@ -51,13 +51,13 @@ class Ui_MainWindow(QMainWindow):
         self.uiOkno.lokacijaExcelBtn.clicked.connect(self.uiOkno.fileDialog)
         
         self.uiOkno.zakljuciZapisBtn.clicked.connect(self.zacni_tu)
-        self.uiOkno.zakljuciZapisBtn.clicked.connect(self.mail_posli)
+        # self.uiOkno.zakljuciZapisBtn.clicked.connect(self.mail.poslji)
 
     def mail_podatki(self):
         self.mail.sporocilo(self.projekt)
         
-    def mail_posli(self):
-        self.mail.poslji()
+    # def mail_posli(self):
+    #     self.mail.poslji()
 
     # posodobimo splosne podatke o projektu
     def info_projekt(self):
