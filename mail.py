@@ -5,9 +5,9 @@
 ###########################################################################
 
 import smtplib, ssl
+from datetime import datetime
 
 class Mail():
-
     def __init__(self):
         self.port = 587  # For starttls
         self.smtp_server = "smtp.gmail.com"
@@ -15,18 +15,33 @@ class Mail():
         self.prejemnik = "rok.mokorel@gmail.com"
         self.geslo = 'projektmisija'
 
-        self.vsebina = """UPDATE projekta: projektant
+        self.sporocilo = ''
 
-        Sporočilo iz programa.
-        """
-    # TODO: DEBUG, vrne sporocilo() takes 0 positional arguments but 1 was given
-    def sporocilo(self, slovar):
-            return f'NOVI PROJEKT: {slovar["naziv"]}, projektant: \
-            {slovar["projektant"]}' \
-            f'' \
-            f'Podatki o projektu: {slovar["naziv"]}' \
-            f'Lokacija: {slovar["lokacija"]}' \
-            f'Naročnik: {slovar["naročnik"]}'
+    def gen_sporocilo(self, slovar):
+        # self.vsebina = f'PODATKI O PROJEKTU: {slovar["naziv"]}<br>' \
+        # f'Naročnik: {slovar["narocnik"]}<br>' \
+        # f'Lokacija: {slovar["lokacija"]}<br>' \
+        # f'Izvajalec: {slovar["izvajalec"]}<br>'
+        # f'Pričetek: {slovar["pricetek"]}<br>'
+        # f'Posebnosti: {slovar["posebnosti"]}<br>'
+        podatki = {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Content-Disposition': 'inline',
+        'Content-Transfer-Encoding': '8bit',
+        'From': self.prejemnik,
+        'To': self.posiljatelj,
+        'Date': datetime.now().strftime('%a, %d %b %Y  %H:%M:%S'),
+        'Subject': f'PODATKI O PROJEKTU: {slovar["naziv"]}'}
+
+        for polje, vrednost in podatki.items():
+            self.sporocilo += f'{polje}: {vrednost}\n'
+        
+        self.sporocilo += f'\nNaziv: {slovar["naziv"]}<br>' \
+        f'Lokacija: {slovar["lokacija"]}<br>' \
+        f'Izvajalec: {slovar["izvajalec"]}<br>' \
+        f'Pričetek: {slovar["pricetek"]}<br>' \
+        f'Posebnosti: {slovar["posebnosti"]}<br>\n'
+        return None
 
     def poslji(self):
         kontekst = ssl.create_default_context()
@@ -35,4 +50,5 @@ class Mail():
             server.starttls(context=kontekst)
             server.ehlo()  # lahko izpustimo
             server.login(self.posiljatelj, self.geslo)
-            server.sendmail(self.posiljatelj, self.prejemnik, self.vsebina)
+            server.sendmail(self.posiljatelj, self.prejemnik, \
+                self.sporocilo.encode("utf8"))

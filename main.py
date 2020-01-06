@@ -51,10 +51,10 @@ class Ui_MainWindow(QMainWindow):
         self.uiOkno.lokacijaExcelBtn.clicked.connect(self.uiOkno.fileDialog)
         
         self.uiOkno.zakljuciZapisBtn.clicked.connect(self.zacni_tu)
-        # self.uiOkno.zakljuciZapisBtn.clicked.connect(self.mail.poslji)
+        self.uiOkno.zakljuciZapisBtn.clicked.connect(self.mail.poslji)
 
     def mail_podatki(self):
-        print(self.mail.sporocilo(self.podatki))
+        self.mail.gen_sporocilo(self.podatki)
 
     # posodobimo splosne podatke o projektu
     def info_projekt(self):
