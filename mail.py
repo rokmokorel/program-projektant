@@ -18,12 +18,6 @@ class Mail():
         self.sporocilo = ''
 
     def gen_sporocilo(self, slovar):
-        # self.vsebina = f'PODATKI O PROJEKTU: {slovar["naziv"]}<br>' \
-        # f'Naročnik: {slovar["narocnik"]}<br>' \
-        # f'Lokacija: {slovar["lokacija"]}<br>' \
-        # f'Izvajalec: {slovar["izvajalec"]}<br>'
-        # f'Pričetek: {slovar["pricetek"]}<br>'
-        # f'Posebnosti: {slovar["posebnosti"]}<br>'
         podatki = {
         'Content-Type': 'text/html; charset=utf-8',
         'Content-Disposition': 'inline',

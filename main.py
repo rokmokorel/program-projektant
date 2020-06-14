@@ -11,7 +11,6 @@
 
 import sys
 from collections import defaultdict
-# from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from ui_zacetek import *
@@ -51,7 +50,7 @@ class Ui_MainWindow(QMainWindow):
         self.uiOkno.lokacijaExcelBtn.clicked.connect(self.uiOkno.fileDialog)
         
         self.uiOkno.zakljuciZapisBtn.clicked.connect(self.zacni_tu)
-        self.uiOkno.zakljuciZapisBtn.clicked.connect(self.mail.poslji)
+        # self.uiOkno.zakljuciZapisBtn.clicked.connect(self.mail.poslji)
 
     def mail_podatki(self):
         self.mail.gen_sporocilo(self.podatki)

@@ -21,7 +21,7 @@ class Ui_Zacetek(QWidget):
         font = QFont()
         font.setPointSize(10)
         MainWindow.setFont(font)
-        app_icon = QIcon('logo/logo_256.ico')
+        app_icon = QIcon('logo\logo_256.ico')
         MainWindow.setWindowIcon(app_icon)
 
         # glavni gradnik in skupni vertikalni prostor
@@ -37,8 +37,8 @@ class Ui_Zacetek(QWidget):
         self.prostorL = QSpacerItem(80, 20, QSizePolicy.Minimum)
         # slika
         self.slika = QLabel()
-        self.slika.setFixedSize(QSize(105, 28))
-        self.slika.setPixmap(QPixmap("logo/logoArtboard-2.png"))
+        self.slika.setFixedSize(QSize(120, 120))
+        self.slika.setPixmap(QPixmap("logo\logo2.png"))
         self.slika.setScaledContents(True)
         # skupaj v prostor
         self.logoHLayout.addItem(self.prostorL)

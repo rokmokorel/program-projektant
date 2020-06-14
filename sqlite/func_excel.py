@@ -96,17 +96,5 @@ class ExStran(ExDatoteka):
         # premaknemo kurzor za vstavljanje nove postavke
         self.r_kurzor += 2
         self.zap_popis += 1
-        
-
-# def main2():
-#     zvezek = ExDatoteka()
-#     stran = ExStran(zvezek)
-
-#     stran.zapisi_postavko('i-BX M 004M')
-#     stran.zapisi_postavko('i-BX T 035T')
-#     stran.zapri()
-
-#     zvezek.ex_shrani()
-
 # main2()
     

@@ -32,7 +32,7 @@ class Ui_Tabela(QWidget):
         self.tabela.verticalHeader().setVisible(False)
         self.tabela.horizontalHeader().setDefaultSectionSize(92)
         self.tabela.horizontalHeader().setMinimumSectionSize(20)
-        self.tabela.verticalHeader().setDefaultSectionSize(10)
+        self.tabela.verticalHeader().setDefaultSectionSize(20)
 
         # 1 vrstica tabele, "header"
         item = QTableWidgetItem("Model")
